@@ -4,7 +4,8 @@ const bsv = require('bsv');
 function scriptPubKeyCalculator (address){
     let decodeAddress = bsv.encoding.Base58Check.decode(address);
     let scriptPubKey = decodeAddress.slice(1);
-    return scriptPubKey;
+    let strscriptPubKey = scriptPubKey.toString('hex');
+    return strscriptPubKey;
 //    let wif = 'Kyvu96nXzQmPT39G71AS9e8h8qia2dofp9wchSYwt6hUULzjBBdp';
 //    let privateKey = bsv.PrivateKey.fromWIF(wif);
 //    let publicKey = bsv.PublicKey.fromPrivateKey(privateKey);
