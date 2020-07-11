@@ -3,31 +3,21 @@ const bsv = require('bsv');
 
 function scriptPubKeyCalculator (address){
     let decodeAddress = bsv.encoding.Base58Check.decode(address);
-    let scriptPubKey = decodeAddress.slice(1);
-    let strscriptPubKey = scriptPubKey.toString('hex');
-    return strscriptPubKey;
-//    let wif = 'Kyvu96nXzQmPT39G71AS9e8h8qia2dofp9wchSYwt6hUULzjBBdp';
-//    let privateKey = bsv.PrivateKey.fromWIF(wif);
-//    let publicKey = bsv.PublicKey.fromPrivateKey(privateKey);
-//    let pbID = 
-//    console.log('zaizheli');
-//    console.log(publicKey);
-//    console.log('zaizheli');
-//    return true;
-//    let bufpublicKey = bsv.encoding.BufferWriter.prototype.toBuffer(publicKey);
-//    let scriptSha256PubKey = bsv.crypto.Hash.sha256(bufpublicKey);
-//    let scriptPubKey = bsv.crypto.Hash.ripemd160(bsv.crypto.Hash.sha256(publicKey));
-//    return scriptSha256PubKey;
+    let sptPubKey = decodeAddress.slice(1);
+    let middlesptPubKey = sptPubKey.toString('hex');
+    let scriptPubKey = `OP_DUP OP_HASH160 ${middlesptPubKey} OP_EQUALVERIFY OP_CHECKSIG`;
+    return scriptPubKey;
 }
-
 class SignTransaction extends React.Component{
     constructor(props){
         super(props);
-        this.state = {};
+//        this.state = {utxo:this.props.utxo};
     }
     render (){
         let test3 = scriptPubKeyCalculator('1D7nNuyHjsYtG1Pbk3stvcs6inqWUvCsZy');
         console.log(test3);
+//        let utxoData = this.state.utxo.data;
+//        console.log(utxoData);
         return(
         <div></div>
         );

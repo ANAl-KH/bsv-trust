@@ -29,7 +29,7 @@ class UtxoList extends Component {
     render (){
         return (
             <div>
-            <TrustTime utxo={this.state.utxoInfo}
+                :<TrustTime utxo={this.state.utxoInfo}
             wif={this.props.wif}
             />
             </div>
