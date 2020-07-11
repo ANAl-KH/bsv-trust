@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch localhost",
+            "type": "chrome",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost:3000",
+            "pathMappings": [{
+                "url": "http://localhost",
+                "path": "${workspaceFolder}"
+            }]
+        }
+    ]
+}
