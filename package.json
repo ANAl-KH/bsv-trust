@@ -9,7 +9,6 @@
     "antd": "^4.4.1",
     "bsv": "^1.5.3",
     "http-proxy-middleware": "^1.0.4",
-    "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"

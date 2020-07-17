@@ -23,7 +23,7 @@ class UtxoInput extends React.Component{
         const wif = this.state.wif;
         return(
             <fieldset>
-                <legend>请输入单个地址的WIF格式私钥:</legend>
+                <legend>请输入WIF格式的私钥:</legend>
                 <input value={wif}
                 onChange={this.handleWifChange} />
                 <button onClick={this.handleWifClick}>确认
