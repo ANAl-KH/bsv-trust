@@ -19,10 +19,17 @@ class UtxoList extends Component {
         const address = toAddress(wif)+'/utxo';
         console.log(address);
         const res = await fetch(`/api/${address}`);
-        const test1 = await res.json();
-        const test2 = JSON.stringify(test1);
-        this.setState({utxoInfo:test2});
-        console.log(test2);
+        const utxoObj = await res.json();
+        const utxoStr = JSON.stringify(utxoObj);
+        this.setState({utxoInfo:utxoStr});
+        console.log(utxoStr);
+        console.log(utxoObj);
+        if (utxoObj.code === 200 && utxoObj.success === true){
+            var utxoData = utxoObj.data;
+            for(var i in utxoData){
+                console.log(utxoData[i].ancestors);
+            }
+        }else{console.log('获取utxo失败');}
     }
     render (){
         return (

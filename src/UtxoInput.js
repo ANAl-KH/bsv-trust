@@ -23,7 +23,8 @@ class UtxoInput extends React.Component{
         const wif = this.state.wif;
         return(
             <fieldset>
-                <legend>请输入WIF格式的私钥:</legend>
+                <div>在创建信托时请不要对该地址内的BSV进行操作，以免信托创建失败</div>
+                <div>请输入WIF格式的私钥:</div>
                 <input value={wif}
                 onChange={this.handleWifChange} />
                 <button onClick={this.handleWifClick}>确认
