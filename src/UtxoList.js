@@ -11,8 +11,6 @@ function toAddress(wif){
 function toScriptPubKey(address){
     let pubKeyHash = bsv.encoding.Base58Check.decode(address).slice(1);
     let scriptPubKey = `76a914${pubKeyHash.toString('hex')}88ac`;
-    let test1 = scriptPubKey.toString('hex');
-    console.log(test1);
     console.log(scriptPubKey);
     return scriptPubKey;
 }
@@ -42,6 +40,11 @@ class UtxoList extends Component {
                 console.log(totalAncestors);
                 //按照bsv库的要求对utxo进行改造，将value改名为satoshis，加一个属性scriptPubKey
                 //a
+                utxoData.forEach(element => {
+                    element['satoshis']=element['value'];
+                    element['scriptPubKey']=scriptPubKey;
+                });
+                console.log(utxoData);
             }else{console.log('未确认utxo链式调用超过25层，请稍后再创建信托')}
         }else{console.log('获取utxo失败');}
     }
