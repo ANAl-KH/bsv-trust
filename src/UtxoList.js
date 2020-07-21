@@ -7,6 +7,16 @@ function toAddress(wif){
     let address = bsv.Address.fromPrivateKey(privateKey);
     return address.toString();
 }
+//从地址倒推出scriptPubKey
+function toScriptPubKey(address){
+    let pubKeyHash = bsv.encoding.Base58Check.decode(address).slice(1);
+    let scriptPubKey = `76a914${pubKeyHash.toString('hex')}88ac`;
+    let test1 = scriptPubKey.toString('hex');
+    console.log(test1);
+    console.log(scriptPubKey);
+    return scriptPubKey;
+}
+
 //async function (props){
 //    const res = await fetch(`/api/${address}`);
 //    const test1 = await
@@ -16,6 +26,7 @@ class UtxoList extends Component {
 
     async componentDidMount() {
         const wif = this.props.wif;
+        const scriptPubKey = toScriptPubKey(toAddress(wif));
         const address = toAddress(wif)+'/utxo';
         console.log(address);
         const res = await fetch(`/api/${address}`);
@@ -26,9 +37,12 @@ class UtxoList extends Component {
         console.log(utxoObj);
         if (utxoObj.code === 200 && utxoObj.success === true){
             var utxoData = utxoObj.data;
-            for(var i in utxoData){
-                console.log(utxoData[i].ancestors);
-            }
+            var totalAncestors = 0;
+            if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){
+                console.log(totalAncestors);
+                //按照bsv库的要求对utxo进行改造，将value改名为satoshis，加一个属性scriptPubKey
+                //a
+            }else{console.log('未确认utxo链式调用超过25层，请稍后再创建信托')}
         }else{console.log('获取utxo失败');}
     }
     render (){
