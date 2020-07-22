@@ -25,7 +25,7 @@ class UtxoInput extends React.Component{
             <fieldset>
                 <div>在创建信托时请不要对该地址内的BSV进行操作，以免信托创建失败</div>
                 <div>目前最多支持使用300个utxo创建信托</div>
-                <div>请输入WIF格式的私钥:</div>
+                <div>请输入WIF格式的私钥:需要验证用户输入的私钥和地址是否合法</div>
                 <input value={wif}
                 onChange={this.handleWifChange} />
                 <button onClick={this.handleWifClick}>确认

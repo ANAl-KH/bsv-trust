@@ -39,7 +39,8 @@ class UtxoList extends Component {
             if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){
                 console.log(totalAncestors);
                 //按照bsv库的要求对utxo进行改造，将value改名为satoshis，加一个属性scriptPubKey
-                //a
+                //todo:计算一下总额够不够所有的手续费,总额太小的也不能支持,如果有300个100聪的，也不行。
+                //parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0))
                 utxoData.forEach(element => {
                     element['satoshis']=element['value'];
                     element['scriptPubKey']=scriptPubKey;
@@ -47,6 +48,8 @@ class UtxoList extends Component {
                 console.log(utxoData);
             }else{console.log('未确认utxo链式调用超过25层，请稍后再创建信托')}
         }else{console.log('获取utxo失败');}
+        console.log(utxoData.length);
+        console.log(parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0)))
     }
     render (){
         return (
