@@ -11,6 +11,8 @@ class TrustTime extends React.Component{
     }
     handleonChange(value,dateString){
         console.log(value);
+        console.log(value._d);
+        console.log(moment(value._d).unix());
         console.log(dateString);
     }
     handleonOk(value){

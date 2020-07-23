@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TrustTime from './TrustTime';
+import moment from 'moment';
 const bsv = require('bsv');
 
 function toAddress(wif){
@@ -24,6 +25,7 @@ class UtxoList extends Component {
 
     async componentDidMount() {
         const wif = this.props.wif;
+        const privateKey = bsv.PrivateKey.fromWIF(wif);
         const scriptPubKey = toScriptPubKey(toAddress(wif));
         const address = toAddress(wif)+'/utxo';
         console.log(address);
@@ -39,7 +41,7 @@ class UtxoList extends Component {
             if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){
                 console.log(totalAncestors);
                 //按照bsv库的要求对utxo进行改造，将value改名为satoshis，加一个属性scriptPubKey
-                //todo:计算一下总额够不够所有的手续费,总额太小的也不能支持,如果有300个100聪的，也不行。
+                //todo:计算一下总额够不够所有的手续费,总额太小的也不能支持,如果有300个100聪的，也不行。扣完手续费只剩dust的也不行
                 //parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0))
                 utxoData.forEach(element => {
                     element['satoshis']=element['value'];
@@ -50,6 +52,14 @@ class UtxoList extends Component {
         }else{console.log('获取utxo失败');}
         console.log(utxoData.length);
         console.log(parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0)))
+        console.log(moment().unix());
+        var currentUnix = moment().unix();
+        var targetUnix = 1600849647;
+        //如果一年内，手续费是40万sat，超过一年，手续费是90万sat
+        var reduceTx = bsv.Transaction().from(utxoData).to('1D7nNuyHjsYtG1Pbk3stvcs6inqWUvCsZy',239825).sign(privateKey);
+        console.log(reduceTx);
+        var rawReduceTx = reduceTx.toBuffer().toString('hex');
+        console.log(rawReduceTx);
     }
     render (){
         return (
