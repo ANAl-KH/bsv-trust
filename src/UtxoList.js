@@ -33,7 +33,7 @@ class UtxoList extends Component {
         this.setState({utxoInfo:utxoStr});
         console.log(utxoStr);
         console.log(utxoObj);
-        if (utxoObj.code === 200 && utxoObj.success === true){
+        if (utxoObj.code === 200 && utxoObj.success === true && utxoObj.data!==[]){
             var utxoData = utxoObj.data;
             var totalAncestors = 0;
             if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){

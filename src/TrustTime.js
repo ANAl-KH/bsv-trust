@@ -1,9 +1,11 @@
 import React from 'react';
 import {DatePicker} from 'antd';
+import moment from 'moment';
 class TrustTime extends React.Component{
     constructor(props){
         super(props);
         this.state = {time:''};
+        this.disableDate = this.disableDate.bind(this);
         this.handleonChange = this.handleonChange.bind(this);
         this.handleonOk = this.handleonOk.bind(this);
     }
@@ -15,10 +17,13 @@ class TrustTime extends React.Component{
         this.setState({time:value});
         console.log(this.state.time);
     }
+    disableDate(current){
+        return current < moment().startOf('day');
+    }
     render(){
         return(
             <div>
-                <DatePicker showTime onChange={this.handleonChange} onOk={this.handleonOk} />
+                <DatePicker disabledDate={this.disableDate} showTime onChange={this.handleonChange} onOk={this.handleonOk} />
             </div>
         );
     }
