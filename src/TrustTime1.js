@@ -65,6 +65,7 @@ class TrustTime1 extends React.Component{
                     };
                     var carrierTx = bsv.Transaction().from(carrierUtxo).addSafeData(rawTrustTx).sign(this.props.privateKey);
                     var rawCarrierTx = carrierTx.toBuffer().toString('hex');
+                    console.log(rawCarrierTx);
                     /*
                     try{
                         var postReduceRes = await fetch('/postapi/',{

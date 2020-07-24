@@ -10,7 +10,6 @@ function toAddress(wif){
 function toScriptPubKey(address){
     let pubKeyHash = bsv.encoding.Base58Check.decode(address).slice(1);
     let scriptPubKey = `76a914${pubKeyHash.toString('hex')}88ac`;
-    console.log(scriptPubKey);
     return scriptPubKey;
 }
 
@@ -36,6 +35,7 @@ class UtxoInput1 extends React.Component{
             try{
                 var res = await fetch(`/api/${address}`);
                 var utxoObj = await res.json();
+                console.log(utxoObj);
                 if (utxoObj.code === 200 && utxoObj.success === true){
                     if(utxoObj.data!==[]){
                         var utxoData = utxoObj.data;
