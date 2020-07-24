@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import {DatePicker} from 'antd';
 import moment from 'moment';
@@ -31,3 +32,4 @@ class TrustTime extends React.Component{
     }
 }
 export default TrustTime;
+*/
