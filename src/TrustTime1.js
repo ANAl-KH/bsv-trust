@@ -44,7 +44,8 @@ class TrustTime1 extends React.Component{
                     var reduceTx = bsv.Transaction().from(this.props.utxo).to('1KXZ29ssLh83hZcuzHAADXso37tUYt3Saw',400000).to(trustAddress,230).to(trustAddress,reduceSat).sign(this.props.privateKey);
                     var rawReduceTx = reduceTx.toBuffer().toString('hex');
                     console.log(rawReduceTx);
-                    console.log(bsv.crypto.Hash.sha256sha256(rawReduceTx));
+                    console.log(bsv.crypto.Hash.sha256sha256(reduceTx.toBuffer()).toString('hex'));
+                    console.log(bsv.crypto.Hash.sha256sha256(reduceTx.toBuffer()).reverse().toString('hex'));
                 }catch(e){this.setState({err:'创建信托失败,请联系管理员微信：15317066025'})}
             }catch(e){this.setState({err:'地址格式错误，请输入正确的BSV地址'})}
         }else{this.setState({err:'请设定信托到期时间与信托到期后接收信托资金的地址'})}
