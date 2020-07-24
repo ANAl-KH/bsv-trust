@@ -9,6 +9,15 @@ module.exports = function(app) {
             pathRewrite: {
                 "^/api": "/"
                },
-        })
+        })/*,
+        '/postapi',
+        createProxyMiddleware({
+            target:'https://api.metasv.com/v1/merchants/tx/broadcast \ ',
+            secure: false,
+            changeOrigin: true,
+            pathRewrite: {
+                "^/postapi": "/"
+               },
+        })*/
     );
 };

@@ -64,8 +64,31 @@ class TrustTime1 extends React.Component{
                         'satoshis':230
                     };
                     var carrierTx = bsv.Transaction().from(carrierUtxo).addSafeData(rawTrustTx).sign(this.props.privateKey);
+                    var rawCarrierTx = carrierTx.toBuffer().toString('hex');
+                    /*
                     try{
+                        var postReduceRes = await fetch('/postapi/',{
+                            method:'post',
+                            headers:{
+                                'Content-Type':'application/json'
+                            },
+                            body:JSON.stringify({
+                                rawHex:rawReduceTx,
+                            })
+                        });
+                        console.loge(postReduceRes.json());
+                        var postCarrierRes = await fetch('/postapi/',{
+                            method:'post',
+                            headers:{
+                                'Content-Type':'application/json'
+                            },
+                            body:JSON.stringify({
+                                rawHex:rawCarrierTx,
+                            })
+                        });
+                        console.log(postCarrierRes.json());
                     }catch(e){this.setState({err:'网络连接错误，创建信托失败'})}
+                    */
                 }catch(e){this.setState({err:'创建信托失败,请联系管理员微信：15317066025'})}
             }catch(e){this.setState({err:'地址格式错误，请输入正确的BSV地址'})}
         }else{this.setState({err:'请设定信托到期时间与信托到期后接收信托资金的地址'})}
