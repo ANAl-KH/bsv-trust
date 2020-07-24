@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import TrustTime1 from './TrustTime1';
 const bsv = require('bsv');
 
 function toAddress(wif){
@@ -17,17 +17,18 @@ function toScriptPubKey(address){
 class UtxoInput1 extends React.Component{
     constructor(props){
         super(props);
-        this.state = {wif:'',err:''};
+        this.state = {wif:'',err:'',success:false};
         this.handleWifChange = this.handleWifChange.bind(this);
         this.handleWifClick = this.handleWifClick.bind(this);
     }
 
     handleWifChange(e){
-        this.setState({wif: e.target.value});
+        this.setState({wif: e.target.value,success:false});
     }
 
     async handleWifClick (){
         var wif = this.state.wif;
+        this.setState({success:false});
         try{
             var privateKey = bsv.PrivateKey.fromWIF(wif);
             var scriptPubKey = toScriptPubKey(toAddress(wif));
@@ -45,7 +46,7 @@ class UtxoInput1 extends React.Component{
                                 utxoData.forEach(element => {
                                     element['satoshis']=element['value'];
                                     element['scriptPubKey']=scriptPubKey;
-                                    this.setState({err:`成功导入私钥，余额为${totalBsv}`});
+                                    this.setState({err:`成功导入私钥，余额为${totalBsv}`,success:true,utxo:utxoData,privateKey:privateKey,totalBsvSat:totalBsvSat});
                                 });
                             }else{this.setState({err:'未确认utxo链式调用超过25层，请稍后再创建信托'})}
                         }else{this.setState({err:'该地址余额不足，最少需要0.0133BSV'})}
@@ -58,16 +59,23 @@ class UtxoInput1 extends React.Component{
     render(){
         const wif = this.state.wif;
         const err = this.state.err;
+        const success = this.state.success;
         return(
             <div>
                 <div>在创建信托时请不要对该地址内的BSV进行操作，以免信托创建失败</div>
                 <div>目前最多支持使用300个utxo创建信托</div>
-                <div>请输入WIF格式的私钥:需要验证用户输入的私钥和地址是否合法</div>
+                <div>请输入WIF格式的私钥:</div>
                 <input value={wif} onChange={this.handleWifChange} />
                 <button onClick={this.handleWifClick}>确认</button>
                 <div>{err}</div>
+                <div>
+                    {success
+                    ? <TrustTime1 utxo={this.state.utxo} privateKey={this.state.privateKey} totalBsvSat={this.state.totalBsvSat}/>
+                    : null
+                    }
+                </div>
             </div>
-        )
+        );
     }
 }
 
