@@ -41,15 +41,15 @@ class UtxoInput1 extends React.Component{
                         var utxoData = utxoObj.data;
                         var totalBsvSat = parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0));
                         var totalBsv = totalBsvSat/100000000;
-                        if(totalBsvSat > parseInt(133/*0000*/)){
+                        if(totalBsvSat > parseInt(1350000)){
                             if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){
                                 utxoData.forEach(element => {
                                     element['satoshis']=element['value'];
                                     element['scriptPubKey']=scriptPubKey;
-                                    this.setState({err:`成功导入私钥，余额为${totalBsv}`,success:true,utxo:utxoData,privateKey:privateKey,totalBsvSat:totalBsvSat});
+                                    this.setState({err:`成功导入私钥，余额为${totalBsv}BSV`,success:true,utxo:utxoData,privateKey:privateKey,totalBsvSat:totalBsvSat,scriptPubKey:scriptPubKey});
                                 });
                             }else{this.setState({err:'未确认utxo链式调用超过25层，请稍后再创建信托'})}
-                        }else{this.setState({err:'该地址余额不足，最少需要0.0133BSV'})}
+                        }else{this.setState({err:'该地址余额不足，最少需要0.0135BSV'})}
                     }else{this.setState({err:'该地址可用余额为零'})}
                 }else{this.setState({err:'metasv.com服务器连接出错，无法查询余额'})}
             }catch(e){this.setState({err:'您的网络连接不正常，无法查询该地址余额'})}
@@ -62,15 +62,13 @@ class UtxoInput1 extends React.Component{
         const success = this.state.success;
         return(
             <div>
-                <div>在创建信托时请不要对该地址内的BSV进行操作，以免信托创建失败</div>
-                <div>目前最多支持使用300个utxo创建信托</div>
-                <div>请输入WIF格式的私钥:</div>
+                <div>请输入单个地址的WIF格式的私钥:</div>
                 <input value={wif} onChange={this.handleWifChange} />
-                <button onClick={this.handleWifClick}>确认</button>
+                <button onClick={this.handleWifClick}>获取余额</button>
                 <div>{err}</div>
                 <div>
                     {success
-                    ? <TrustTime1 utxo={this.state.utxo} privateKey={this.state.privateKey} totalBsvSat={this.state.totalBsvSat}/>
+                    ? <TrustTime1 utxo={this.state.utxo} privateKey={this.state.privateKey} totalBsvSat={this.state.totalBsvSat} scriptPubKey={this.state.scriptPubKey}/>
                     : null
                     }
                 </div>

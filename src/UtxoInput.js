@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 class UtxoInput extends React.Component{
     constructor(props){
@@ -36,3 +37,4 @@ class UtxoInput extends React.Component{
 }
 
 export default UtxoInput;
+*/

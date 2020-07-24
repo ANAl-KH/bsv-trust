@@ -30,7 +30,7 @@ class TrustTime1 extends React.Component{
         this.setState({targetAddress: e.target.value});
     }
 
-    handleSetClick(){
+    async handleSetClick(){
         if(this.state.time !== '' && this.state.targetAddress !== ''){
             try{
                 var correctTargetAddress = bsv.Address.fromString(this.state.targetAddress)
@@ -44,8 +44,28 @@ class TrustTime1 extends React.Component{
                     var reduceTx = bsv.Transaction().from(this.props.utxo).to('1KXZ29ssLh83hZcuzHAADXso37tUYt3Saw',400000).to(trustAddress,230).to(trustAddress,reduceSat).sign(this.props.privateKey);
                     var rawReduceTx = reduceTx.toBuffer().toString('hex');
                     console.log(rawReduceTx);
-                    console.log(bsv.crypto.Hash.sha256sha256(reduceTx.toBuffer()).toString('hex'));
-                    console.log(bsv.crypto.Hash.sha256sha256(reduceTx.toBuffer()).reverse().toString('hex'));
+                    var reduceTxid = bsv.crypto.Hash.sha256sha256(reduceTx.toBuffer()).reverse().toString('hex');
+                    var trustUtxo = {
+                        'address':trustAddress,
+                        'txId':reduceTxid,
+                        'outputIndex':2,
+                        'scriptPubKey':this.props.scriptPubKey,
+                        'satoshis':reduceSat
+                    };
+                    console.log(trustUtxo);
+                    var trustTx = bsv.Transaction().from(trustUtxo).to(correctTargetAddress,reduceSat-900130).to(correctTargetAddress,900000).lockUntilDate(this.state.time).sign(this.props.privateKey,3);
+                    var rawTrustTx = trustTx.toBuffer().toString('hex');
+                    console.log(rawTrustTx);
+                    var carrierUtxo = {
+                        'address':trustAddress,
+                        'txId':reduceTxid,
+                        'outputIndex':1,
+                        'scriptPubKey':this.props.scriptPubKey,
+                        'satoshis':230
+                    };
+                    var carrierTx = bsv.Transaction().from(carrierUtxo).addSafeData(rawTrustTx).sign(this.props.privateKey);
+                    try{
+                    }catch(e){this.setState({err:'网络连接错误，创建信托失败'})}
                 }catch(e){this.setState({err:'创建信托失败,请联系管理员微信：15317066025'})}
             }catch(e){this.setState({err:'地址格式错误，请输入正确的BSV地址'})}
         }else{this.setState({err:'请设定信托到期时间与信托到期后接收信托资金的地址'})}
@@ -56,9 +76,9 @@ class TrustTime1 extends React.Component{
         console.log(this.props.privateKey);
         return(
             <div>
-                <div>设定信托到期时间：</div>
+                <div>请设定信托到期时间：</div>
                 <DatePicker disabledDate={this.disableDate} showTime onChange={this.handleTimeonChange} onOk={this.handleTimeonOk} />
-                <div>设定信托到期后接收信托资金的地址：</div>
+                <div>请设定信托到期后接收信托资金的地址：</div>
                 <input value = {address} onChange={this.handleAddronChange} />
                 <button onClick={this.handleSetClick}>创建信托</button>
                 <div>{this.state.err}</div>

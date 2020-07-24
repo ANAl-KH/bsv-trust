@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react';
 import TrustTime from './TrustTime';
 import moment from 'moment';
@@ -73,3 +74,4 @@ class UtxoList extends Component {
     }
 }
 export default UtxoList;
+*/
