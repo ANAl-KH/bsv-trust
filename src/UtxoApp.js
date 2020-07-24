@@ -1,5 +1,6 @@
 import React from 'react';
 import UtxoInput from './UtxoInput';
+import UtxoInput1 from './UtxoInput1';
 import UtxoList from './UtxoList';
 
 class UtxoApp extends React.Component{
@@ -16,6 +17,7 @@ class UtxoApp extends React.Component{
         const isempty = (this.state.wif === '');
         return(
             <div>
+                <UtxoInput1/>
                 <UtxoInput onWif={this.handleWifInput.bind(this)}/>
                 <div>
                 {isempty

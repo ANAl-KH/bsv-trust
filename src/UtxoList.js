@@ -40,6 +40,7 @@ class UtxoList extends Component {
             var totalAncestors = 0;
             if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){
                 console.log(totalAncestors);
+                //重构，全部重构
                 //按照bsv库的要求对utxo进行改造，将value改名为satoshis，加一个属性scriptPubKey
                 //todo:计算一下总额够不够所有的手续费,总额太小的也不能支持,如果有300个100聪的，也不行。扣完手续费只剩dust的也不行
                 //parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0))
@@ -58,6 +59,7 @@ class UtxoList extends Component {
         //如果一年内，手续费是40万sat，超过一年，手续费是90万sat
         var reduceTx = bsv.Transaction().from(utxoData).to('1D7nNuyHjsYtG1Pbk3stvcs6inqWUvCsZy',239825).sign(privateKey);
         console.log(reduceTx);
+        console.log(reduceTx.outputs);
         var rawReduceTx = reduceTx.toBuffer().toString('hex');
         console.log(rawReduceTx);
     }
