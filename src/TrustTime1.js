@@ -63,7 +63,10 @@ class TrustTime1 extends React.Component{
                         'scriptPubKey':this.props.scriptPubKey,
                         'satoshis':230
                     };
-                    var carrierTx = bsv.Transaction().from(carrierUtxo).addSafeData(rawTrustTx).sign(this.props.privateKey);
+                    //var trustSignBuf = Buffer.from('BSVTRUSTLONGDELAY');
+                    //var trustSignHex = trustSignBuf.toString('hex');
+                    var trustSign = 'BSVTRUSTLONGDELAY';
+                    var carrierTx = bsv.Transaction().from(carrierUtxo).addSafeData(trustSign+rawTrustTx).sign(this.props.privateKey);
                     var rawCarrierTx = carrierTx.toBuffer().toString('hex');
                     console.log(rawCarrierTx);
                     /*
