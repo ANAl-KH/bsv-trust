@@ -52,6 +52,7 @@ class UtxoInput1 extends React.Component{
                         var totalBsvSat = parseInt(utxoData.reduce((totalSatoshis,item) => totalSatoshis + item.value,0));
                         var totalBsv = totalBsvSat/100000000;
                         if(totalBsvSat > parseInt(1350000)){
+                            //计算未确认链式调用层数的总和
                             if(parseInt(utxoData.reduce((totalAncestors,item) => totalAncestors + item.ancestors,0)) < parseInt(20)){
                                 utxoData.forEach(element => {
                                     //根据bsv库的要求对UTXO进行改造，将value改名为satoshis，增加scriptPubKey
