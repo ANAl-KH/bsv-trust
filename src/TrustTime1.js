@@ -101,6 +101,7 @@ class TrustTime1 extends React.Component{
                             })
                         });
                         console.log(postCarrierRes.json());
+                        this.setState({err:'创建成功！Txid:'});
                     }catch(e){this.setState({err:'网络连接错误，创建信托失败'})}
                 }catch(e){this.setState({err:'创建信托失败,请联系管理员微信：15317066025'})}
             }catch(e){this.setState({err:'地址格式错误，请输入正确的BSV地址'})}
@@ -118,7 +119,6 @@ class TrustTime1 extends React.Component{
                 <input value = {address} onChange={this.handleAddronChange} />
                 <button onClick={this.handleSetClick}>创建信托</button>
                 <div>{this.state.err}</div>
-                <div>创建成功！</div>
             </div>
         );
     }
