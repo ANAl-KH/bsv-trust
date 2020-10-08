@@ -81,7 +81,7 @@ class TrustTime1 extends React.Component{
                     console.log(rawCarrierTx);
                     //把第一笔交易和第三笔交易的原始数据通过https://metasv.com/#bc60c7b38b post出去，post成功后信托就创建成功了
                     try{
-                        var postReduceRes = await fetch('https://api.metasv.com/v1/merchants/tx/broadcast',{
+                        var postReduceRes = await fetch('/broadtx',{
                             method:'post',
                             headers:{
                                 'Content-Type':'application/json'
@@ -91,7 +91,7 @@ class TrustTime1 extends React.Component{
                             })
                         });
                         console.loge(postReduceRes.json());
-                        var postCarrierRes = await fetch('https://api.metasv.com/v1/merchants/tx/broadcast',{
+                        var postCarrierRes = await fetch('/broadtx',{
                             method:'post',
                             headers:{
                                 'Content-Type':'application/json'
